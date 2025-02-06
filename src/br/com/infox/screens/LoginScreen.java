@@ -10,7 +10,7 @@ public class LoginScreen extends javax.swing.JFrame {
     ResultSet rs = null;
 
     public void login(){
-        String sql = "select * from user_account where login_name = ? and password_hash = ?";
+        String sql = "select * from users_account where login_name = ? and password_hash = ?";
                 
         try {
             pst = conexao.prepareStatement(sql);
@@ -19,11 +19,24 @@ public class LoginScreen extends javax.swing.JFrame {
             pst.setString(2, capture);
             rs = pst.executeQuery();
             
-            if (rs.next()) {
-                MainScreen principal = new MainScreen();
-                principal.setVisible(true);
-                this.dispose();
-                conexao.close();
+            if (rs.next()) { 
+                //linha abaixo obtem o conteudo do campo user_profile do BD
+                String user_profile=rs.getString(8);
+//                System.out.println(user_profile);
+                if (user_profile.equals("admin")){
+                    MainScreen principal = new MainScreen();
+                    principal.setVisible(true);
+                    MainScreen.menuRegisterUsers.setEnabled(true);
+                    MainScreen.menuServiceReport.setEnabled(true);
+                    MainScreen.userLabel.setText(rs.getString(2));
+                    this.dispose();
+                    conexao.close();
+                }else{
+                    MainScreen principal = new MainScreen();
+                    principal.setVisible(true);
+                    MainScreen.userLabel.setText(rs.getString(2));
+                    this.dispose();
+                }
             }else{
                 JOptionPane.showMessageDialog(null, "usuário ou senha invalida");
             }
