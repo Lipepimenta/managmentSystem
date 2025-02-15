@@ -97,6 +97,33 @@ public class UserScreen extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    private void toUpdate() {
+        String sql = "UPDATE users_account SET username=?, phone_number=?, login_name=?, password_hash=?, user_profile=? WHERE user_id=?";
+        
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtUsersUsername.getText());
+            pst.setString(2, txtUsersPhone.getText());
+            pst.setString(3, txtUsersLogin.getText());
+            pst.setString(4, txtUsersPassword.getText());
+            pst.setString(5, txtUsersProfile.getSelectedItem().toString());
+            pst.setString(6, txtUsersId.getText());
+            
+            if ((txtUsersUsername.getText().isEmpty())||(txtUsersLogin.getText().isEmpty())||(txtUsersPassword.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+            } else {
+                int added = pst.executeUpdate();
+    //            System.out.println(added);
+                if (added > 0) {
+                    JOptionPane.showMessageDialog(null, "Dados do usuário atualizados com sucesso");
+                    clearFielnds();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     private void clearFielnds() {
         JTextField[] fields = {txtUsersId, txtUsersUsername, txtUsersPhone, txtUsersLogin, txtUsersPassword};
@@ -190,6 +217,11 @@ public class UserScreen extends javax.swing.JInternalFrame {
         btnUsersUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icons/update.png"))); // NOI18N
         btnUsersUpdate.setToolTipText("Update");
         btnUsersUpdate.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsersUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsersUpdateActionPerformed(evt);
+            }
+        });
 
         txtUsersDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icons/delete.png"))); // NOI18N
         txtUsersDelete.setToolTipText("Delete");
@@ -320,6 +352,11 @@ public class UserScreen extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         toAdd();
     }//GEN-LAST:event_btnUsersCreateActionPerformed
+
+    private void btnUsersUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersUpdateActionPerformed
+        // TODO add your handling code here:
+        toUpdate();
+    }//GEN-LAST:event_btnUsersUpdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
