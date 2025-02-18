@@ -2,6 +2,7 @@ package br.com.infox.screens;
 
 import java.sql.*;
 import br.com.infox.dal.ConnectionModule;
+import static javax.security.auth.callback.ConfirmationCallback.YES_NO_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -124,6 +125,28 @@ public class UserScreen extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    private void remove() {
+        int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o arquivo?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION){
+            String sql = "DELETE FROM users_account WHERE user_id = ?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1,txtUsersId.getText());
+                int deleted = pst.executeUpdate();
+                
+                if (deleted > 0){
+                    JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");
+                    clearFielnds();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir usuário" + e.getMessage());
+            }
+        }
+    }
 
     private void clearFielnds() {
         JTextField[] fields = {txtUsersId, txtUsersUsername, txtUsersPhone, txtUsersLogin, txtUsersPassword};
@@ -226,6 +249,11 @@ public class UserScreen extends javax.swing.JInternalFrame {
         txtUsersDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icons/delete.png"))); // NOI18N
         txtUsersDelete.setToolTipText("Delete");
         txtUsersDelete.setPreferredSize(new java.awt.Dimension(80, 80));
+        txtUsersDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsersDeleteActionPerformed(evt);
+            }
+        });
 
         btnUsersCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icons/create.png"))); // NOI18N
         btnUsersCreate.setToolTipText("Add");
@@ -357,6 +385,11 @@ public class UserScreen extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         toUpdate();
     }//GEN-LAST:event_btnUsersUpdateActionPerformed
+
+    private void txtUsersDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsersDeleteActionPerformed
+        // TODO add your handling code here:
+        remove();
+    }//GEN-LAST:event_txtUsersDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
