@@ -127,7 +127,7 @@ public class UserScreen extends javax.swing.JInternalFrame {
     }
     
     private void remove() {
-        int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o arquivo?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o usuário?", "Confirmação", JOptionPane.YES_NO_OPTION);
         
         if (confirm == JOptionPane.YES_OPTION){
             String sql = "DELETE FROM users_account WHERE user_id = ?";

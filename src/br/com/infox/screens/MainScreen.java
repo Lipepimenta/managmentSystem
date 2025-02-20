@@ -161,6 +161,9 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void menuRegisterCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRegisterCustomerActionPerformed
         // TODO add your handling code here:
+        CustomersScreen customer = new CustomersScreen();
+        customer.setVisible(true);
+        desktop.add(customer);
     }//GEN-LAST:event_menuRegisterCustomerActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -212,7 +215,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenu menuOptions;
     private javax.swing.JMenuItem menuOptionsExit;
     private javax.swing.JMenu menuRegister;
-    private javax.swing.JMenuItem menuRegisterCustomer;
+    public javax.swing.JMenuItem menuRegisterCustomer;
     private javax.swing.JMenuItem menuRegisterServiceOrder;
     public static javax.swing.JMenuItem menuRegisterUsers;
     public javax.swing.JMenu menuReport;
